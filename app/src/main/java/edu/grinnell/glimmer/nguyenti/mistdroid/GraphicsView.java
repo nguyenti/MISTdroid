@@ -1,36 +1,41 @@
 package edu.grinnell.glimmer.nguyenti.mistdroid;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.os.Build;
+import android.util.AttributeSet;
+import android.view.View;
+
+/**
+ * Created by tiffanynguyen on 2/1/15.
+ */
+public class GraphicsView extends View {
 
 
-public class GraphicsView extends Activity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graphics_view);
+    public GraphicsView(Context context) {
+        super(context);
     }
 
+    public GraphicsView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.graphics_view, menu);
-        return true;
+    public GraphicsView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.L)
+    public GraphicsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        // canvas.drawBitmap
+        // canvas.drawPoint
+//        canvas.drawRect(0, 0, getWidth(), getHeight(), paintBg);
     }
 }
