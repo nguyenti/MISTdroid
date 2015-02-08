@@ -9,9 +9,18 @@
     tools:context=".GraphicsView">
 
     <edu.grinnell.glimmer.nguyenti.mistdroid.GraphicsView
-        android:id="@+id/GraphicsView"
+        android:id="@+id/graphicsView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
+    <Button
+        android:id="@+id/btn_red"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/graphicsView"
+        android:layout_weight="5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RED"/>
 
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 
 public class HomeActivity extends Activity {
@@ -12,6 +13,11 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graphics_view);
+
+        final GraphicsView gView = (GraphicsView) findViewById(R.id.graphicsView);
+
+        Button btnRed = (Button) findViewById(R.id.btn_red);
+
     }
 
 
