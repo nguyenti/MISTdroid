@@ -16,7 +16,7 @@ public class Pixel {
         gradient = Math.random();
     }
 
-    public Pixel(int greyscale) {
+    public Pixel(double greyscale) {
         this.gradient = greyscale;
     }
 

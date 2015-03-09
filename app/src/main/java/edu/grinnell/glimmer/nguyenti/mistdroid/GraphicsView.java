@@ -49,6 +49,8 @@ public class GraphicsView extends View {
 
     int height = 100;
     int width = 100;
+    int round = 0;
+    Bitmap bitmap = Bitmap.createBitmap(new DisplayMetrics(), width, height, Config.ARGB_8888);
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -56,36 +58,36 @@ public class GraphicsView extends View {
         Rect src = new Rect(0,0,width,height);
         Rect dest = new Rect(0,0,getWidth(),getWidth());
 
-        Bitmap bitmap = makeBitmap();
+//        Bitmap bitmap = makeBitmap(round);
+        updateBitmap();
+        round = (round + 1) % height;
         canvas.drawBitmap(bitmap, src, dest, paintBg);
 
         invalidate();
-//        canvas.drawRect(0, 0, getWidth(), getHeight(), paintBg);
-
-//        float points[] = new float[200];
-//        int offset = strokeWidth/2;
-//        for (int i = 0; i < 200; i+=2) {
-//
-//                points[i] = (i/20)* strokeWidth + offset;
-//                points[i+1] = (i%20)/2 * strokeWidth + offset;
-//
-//        }
-//        canvas.drawPoints(points, paintwidth);
-//        canvas.drawPoint(300,300,paintPoints);
-        // canvas.drawBitmap
-        // canvas.drawPoint
-//        drawGrid(canvas);
     }
 
-    private Bitmap makeBitmap() {
+    private void updateBitmap() {
         int size = height * width;
         int colors[] = new int[size];
         for (int i = 0; i < size; i++) {
-            colors[i] = new Pixel().gradientToRGB();
+            if (i >= round * width && i < (round + 1) * width)
+                colors[i] = new Pixel(1).gradientToRGB();
+            else
+                colors[i] = new Pixel(.01).gradientToRGB(); // there's a bug here with 0
+        }
+        bitmap.setPixels(colors, 0, width, 0, 0, width, height);
+    }
+
+    private Bitmap makeBitmap(int round) {
+        int size = height * width;
+        int colors[] = new int[size];
+        for (int i = 0; i < size; i++) {
+            if (i >= round * width && i < (round + 1) * width)
+                colors[i] = new Pixel(1).gradientToRGB();
+            else
+                colors[i] = new Pixel(.01).gradientToRGB(); // there's a bug here with 0
         }
         Bitmap bitmap = Bitmap.createBitmap(new DisplayMetrics(), colors, width, height, Config.ARGB_8888);
-//        Config config = new Config();
-//        Bitmap bitmap = Bitmap.createBitmap(new DisplayMetrics(), colors, 200, 200, null);
 
         return bitmap;
     }
