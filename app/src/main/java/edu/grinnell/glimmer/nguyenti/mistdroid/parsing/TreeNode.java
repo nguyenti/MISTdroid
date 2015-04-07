@@ -1,9 +1,9 @@
-package parsing;
+package edu.grinnell.glimmer.nguyenti.mistdroid.parsing;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import evaluating.RGBValue;
+import edu.grinnell.glimmer.nguyenti.mistdroid.data.Pixel;
 
 
 public class TreeNode
@@ -12,7 +12,7 @@ public class TreeNode
   String val;
   ArrayList<TreeNode> children;
   boolean set;
-  RGBValue evaluation;
+  Pixel evaluation;
 
   /* Constructor */
   public TreeNode(String str)
@@ -71,7 +71,7 @@ public class TreeNode
     return set;
   }
   
-  public RGBValue getEvaluation()
+  public Pixel getEvaluation()
   {
     return this.evaluation;
   }
@@ -81,7 +81,7 @@ public class TreeNode
   {
     set = true;
   }
-  public void evaluate(RGBValue v)
+  public void evaluate(Pixel v)
   {
     evaluation = v;
   }

@@ -1,9 +1,13 @@
-package evaluating;
+package edu.grinnell.glimmer.nguyenti.mistdroid.evaluating;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
-import dagmaking.DAG;
-import parsing.*;
+
+import edu.grinnell.glimmer.nguyenti.mistdroid.dagmaking.DAG;
+import edu.grinnell.glimmer.nguyenti.mistdroid.data.Pixel;
+import edu.grinnell.glimmer.nguyenti.mistdroid.parsing.*;
+//import dagmaking.DAG;
+//import parsing.*;
 
 /**
  * A class for evaluating DAGs.
@@ -19,10 +23,10 @@ public class DAGEvaluator
                           // Sum
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                               {
-                                RGBValue sum = new RGBValue(0, 0, 0);
-                                for (RGBValue arg : args)
+                                Pixel sum = new Pixel(0, 0, 0);
+                                for (Pixel arg : args)
                                   {
                                     sum.add(arg);
                                   }
@@ -33,10 +37,10 @@ public class DAGEvaluator
                           // Wrap sum
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                               {
-                                RGBValue sum = new RGBValue(0, 0, 0);
-                                for (RGBValue arg : args)
+                                Pixel sum = new Pixel(0, 0, 0);
+                                for (Pixel arg : args)
                                   {
                                     sum.add(arg);
                                   }
@@ -47,10 +51,10 @@ public class DAGEvaluator
                           // Multiply
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                               {
-                                RGBValue prod = new RGBValue(1, 1, 1);
-                                for (RGBValue arg : args)
+                                Pixel prod = new Pixel(1, 1, 1);
+                                for (Pixel arg : args)
                                   {
                                     prod.multiplyBy(arg);
                                   }
@@ -61,15 +65,15 @@ public class DAGEvaluator
                           // Average
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                               {
-                                RGBValue sum = new RGBValue(0, 0, 0);
-                                for (RGBValue arg : args)
+                                Pixel sum = new Pixel(0, 0, 0);
+                                for (Pixel arg : args)
                                   {
                                     sum.add(arg);
                                   }
                                 sum.range();
-                                sum.multiplyBy(new RGBValue(
+                                sum.multiplyBy(new Pixel(
                                                             1 / ((double) args.length)));
                                 return sum;
                               }
@@ -77,12 +81,12 @@ public class DAGEvaluator
                           // Square
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                                 throws Exception
                               {
                                 if (args.length != 1)
                                   throw new Exception();
-                                RGBValue result = new RGBValue(1,1,1);
+                                Pixel result = new Pixel(1,1,1);
                                 result.multiplyBy(args[0]);
                                 result.multiplyBy(args[0]);
                                 result.range();
@@ -92,12 +96,12 @@ public class DAGEvaluator
                           // Negate
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                                 throws Exception
                               {
                                 if (args.length != 1)
                                   throw new Exception();
-                                RGBValue result = new RGBValue();
+                                Pixel result = new Pixel();
                                 for (int i = 0; i < 3; i++)
                                   {
                                     result.components[i] =
@@ -110,12 +114,12 @@ public class DAGEvaluator
                           // Sine
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                                 throws Exception
                               {
                                 if (args.length != 1)
                                   throw new Exception();
-                                RGBValue result = new RGBValue();
+                                Pixel result = new Pixel();
                                 for (int i = 0; i < 3; i++)
                                   {
                                     result.components[i] =
@@ -128,12 +132,12 @@ public class DAGEvaluator
                           // Cosine
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                                 throws Exception
                               {
                                 if (args.length != 1)
                                   throw new Exception();
-                                RGBValue result = new RGBValue();
+                                Pixel result = new Pixel();
                                 for (int i = 0; i < 3; i++)
                                   {
                                     result.components[i] =
@@ -146,12 +150,12 @@ public class DAGEvaluator
                           // Absolute value
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                                 throws Exception
                               {
                                 if (args.length != 1)
                                   throw new Exception();
-                                RGBValue result = new RGBValue();
+                                Pixel result = new Pixel();
                                 for (int i = 0; i < 3; i++)
                                   {
                                     result.components[i] =
@@ -164,7 +168,7 @@ public class DAGEvaluator
                           // Sign
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                                 throws Exception
                               {
                                 if (args.length != 1)
@@ -172,15 +176,15 @@ public class DAGEvaluator
                                 if (args[0].components[0] > 0
                                     && args[0].components[1] > 0
                                     && args[0].components[2] > 0)
-                                  return new RGBValue(1.0);
+                                  return new Pixel(1.0);
                                 else
-                                  return new RGBValue(-1.0);
+                                  return new Pixel(-1.0);
                               }
                             }, // Sign
                           // If
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                                 throws Exception
                               {
                                 if (args.length != 3)
@@ -199,15 +203,15 @@ public class DAGEvaluator
                           // RGB
                           new Function()
                             {
-                              public RGBValue apply(RGBValue[] args)
+                              public Pixel apply(Pixel[] args)
                                 throws Exception
                               {
                                 if (args.length != 3)
                                   throw new Exception();
                                 // Take the first component of the first child, 
                                 // second of the second child, etc
-                                RGBValue result =
-                                    new RGBValue(args[0].components[0],
+                                Pixel result =
+                                    new Pixel(args[0].components[0],
                                                  args[1].components[1],
                                                  args[2].components[2]);
                                 result.range();
@@ -249,7 +253,7 @@ public class DAGEvaluator
    *    if something has wrong arguments or
    *    if a function is not in the hash
    */
-  public RGBValue evaluate(TreeNode root)
+  public Pixel evaluate(TreeNode root)
     throws Exception
   {
     // If set, this has already been evaluated 
@@ -261,13 +265,13 @@ public class DAGEvaluator
       {
         //STUB
         root.set();
-        RGBValue val = getContext(root.getNodeVal());
+        Pixel val = getContext(root.getNodeVal());
         root.evaluate(val);
         return val; //all leaves have value 1 for now
       }// if leaf
 
     // Otherwise, recurse on each child
-    RGBValue[] args = new RGBValue[root.numChildren()];
+    Pixel[] args = new Pixel[root.numChildren()];
     int i = 0;
     for (TreeNode kid : root.getChildren())
       args[i++] = evaluate(kid);
@@ -288,10 +292,10 @@ public class DAGEvaluator
    *    desired environmental variable
    * @return (1,1,1) <- STUB
    */
-  private static RGBValue getContext(String nodeVal)
+  private static Pixel getContext(String nodeVal)
   {
     //STUB - assume all context values are 1.0
-    return new RGBValue(1.0, 1.0, 1.0);
+    return new Pixel(1.0, 1.0, 1.0);
   }
 
   /**
@@ -322,10 +326,10 @@ public class DAGEvaluator
     // Sum
     functions.put("sum", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                       {
-                        RGBValue sum = new RGBValue(0, 0, 0);
-                        for (RGBValue arg : args)
+                        Pixel sum = new Pixel(0, 0, 0);
+                        for (Pixel arg : args)
                           {
                             sum.add(arg);
                           }// for each argument
@@ -336,10 +340,10 @@ public class DAGEvaluator
     // Multiplication
     functions.put("mult", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                       {
-                        RGBValue prod = new RGBValue(1, 1, 1);
-                        for (RGBValue arg : args)
+                        Pixel prod = new Pixel(1, 1, 1);
+                        for (Pixel arg : args)
                           {
                             prod.multiplyBy(arg);
                           }// for each argument
@@ -350,25 +354,25 @@ public class DAGEvaluator
     // Average
     functions.put("avg", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                       {
-                        RGBValue sum = new RGBValue(0, 0, 0);
-                        for (RGBValue arg : args)
+                        Pixel sum = new Pixel(0, 0, 0);
+                        for (Pixel arg : args)
                           {
                             sum.add(arg);
                           }// for each argument
                         sum.range();
-                        sum.multiplyBy(new RGBValue(1 / ((double) args.length)));
+                        sum.multiplyBy(new Pixel(1 / ((double) args.length)));
                         return sum;
                       }
                     });
     // Wrap sum
     functions.put("wsum", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                       {
-                        RGBValue sum = new RGBValue(0, 0, 0);
-                        for (RGBValue arg : args)
+                        Pixel sum = new Pixel(0, 0, 0);
+                        for (Pixel arg : args)
                           {
                             sum.add(arg);
                           }// for each argument
@@ -379,12 +383,12 @@ public class DAGEvaluator
     // Negate
     functions.put("neg", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                         throws Exception
                       {
                         if (args.length != 1)
                           throw new Exception();
-                        RGBValue result = new RGBValue();
+                        Pixel result = new Pixel();
                         for (int i = 0; i < 3; i++)
                           {
                             result.components[i] = -1.0 * args[0].components[i];
@@ -396,12 +400,12 @@ public class DAGEvaluator
     // Sine
     functions.put("sin", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                         throws Exception
                       {
                         if (args.length != 1)
                           throw new Exception();
-                        RGBValue result = new RGBValue();
+                        Pixel result = new Pixel();
                         for (int i = 0; i < 3; i++)
                           {
                             result.components[i] =
@@ -414,12 +418,12 @@ public class DAGEvaluator
     // Cosine
     functions.put("cos", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                         throws Exception
                       {
                         if (args.length != 1)
                           throw new Exception();
-                        RGBValue result = new RGBValue();
+                        Pixel result = new Pixel();
                         for (int i = 0; i < 3; i++)
                           {
                             result.components[i] =
@@ -432,12 +436,12 @@ public class DAGEvaluator
     // Square root
     functions.put("sqr", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                         throws Exception
                       {
                         if (args.length != 1)
                           throw new Exception();
-                        RGBValue result = new RGBValue();
+                        Pixel result = new Pixel();
                         for (int i = 0; i < 3; i++)
                           { // Notice that we allow negative inputs 
                             result.components[i] =
@@ -450,12 +454,12 @@ public class DAGEvaluator
     // Absolute value
     functions.put("abs", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                         throws Exception
                       {
                         if (args.length != 1)
                           throw new Exception();
-                        RGBValue result = new RGBValue();
+                        Pixel result = new Pixel();
                         for (int i = 0; i < 3; i++)
                           { // Notice that we allow negative inputs 
                             result.components[i] =
@@ -469,7 +473,7 @@ public class DAGEvaluator
     // Non-component-wise sign
     functions.put("sign", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                         throws Exception
                       {
                         if (args.length != 1)
@@ -478,15 +482,15 @@ public class DAGEvaluator
                         if (args[0].components[0] > 0
                             && args[0].components[1] > 0
                             && args[0].components[2] > 0)
-                          return new RGBValue(1.0);
+                          return new Pixel(1.0);
                         else
-                          return new RGBValue(-1.0);
+                          return new Pixel(-1.0);
                       }
                     });
     // Non-component-wise if
     functions.put("if", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                         throws Exception
                       {
                         if (args.length != 3)
@@ -505,15 +509,15 @@ public class DAGEvaluator
     // RGB
     functions.put("rgb", new Function()
                     {
-                      public RGBValue apply(RGBValue[] args)
+                      public Pixel apply(Pixel[] args)
                         throws Exception
                       {
                         if (args.length != 3)
                           throw new Exception();
                         // Take the first component of the first child, 
                         // second of the second child, etc
-                        RGBValue result =
-                            new RGBValue(args[0].components[0],
+                        Pixel result =
+                            new Pixel(args[0].components[0],
                                          args[1].components[1],
                                          args[2].components[2]);
                         result.range();
@@ -528,7 +532,7 @@ public class DAGEvaluator
    */
   public interface Function
   {
-    public RGBValue apply(RGBValue[] args)
+    public Pixel apply(Pixel[] args)
       throws Exception;
   }// interface Function
 

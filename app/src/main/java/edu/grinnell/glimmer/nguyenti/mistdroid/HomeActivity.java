@@ -26,7 +26,7 @@ public class HomeActivity extends Activity {
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(), GraphicsActivity.class);
                 i.putExtra("TAG_CODE", codeText.getText().toString());
-                startActivity(i);g
+                startActivity(i);
             }
         });
     }
