@@ -4,5 +4,7 @@
     <string name="app_name">MISTdroid</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_graphics">GraphicsActivity</string>
+    <string name="render_button_label">Render</string>
 
 </resources>
