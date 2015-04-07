@@ -16,6 +16,8 @@ import edu.grinnell.glimmer.nguyenti.mistdroid.parsing.*;
  */
 public class DAGEvaluator
 {
+
+  TreeNode dag;
   // Hashtable of MIST function strings and their implementations
   HashMap<String, Function> functions;
 
@@ -239,21 +241,26 @@ public class DAGEvaluator
   /**
    *  Build an DAGEvaluator with a complete functions hashtable
    */
-  public DAGEvaluator()
+  public DAGEvaluator(TreeNode d)
   {
+    dag = d;
     functions = new HashMap<>();
     populateFunctionMap();
   }// DAGEvaluator()
 
+
+    public Pixel evaluate(double x, double y) throws Exception {
+        return evaluate(dag, x, y);
+    }
   /**
-   * Evaluate a DAG.
+   * Evaluate a DAG helper.
    * @param root of the DAG
    * @return the RGB value of the DAG
    * @throws Exception 
    *    if something has wrong arguments or
    *    if a function is not in the hash
    */
-  public Pixel evaluate(TreeNode root)
+  private Pixel evaluate(TreeNode root, double x, double y)
     throws Exception
   {
     // If set, this has already been evaluated 
@@ -265,18 +272,22 @@ public class DAGEvaluator
       {
         //STUB
         root.set();
-        Pixel val = getContext(root.getNodeVal());
-        root.evaluate(val);
-        return val; //all leaves have value 1 for now
+        Pixel val;
+        if (root.getNodeVal().equals("x"))
+            val = new Pixel(x);
+         else
+            val = new Pixel(y);
+          root.evaluate(val);
+          return val;
       }// if leaf
 
     // Otherwise, recurse on each child
     Pixel[] args = new Pixel[root.numChildren()];
     int i = 0;
     for (TreeNode kid : root.getChildren())
-      args[i++] = evaluate(kid);
+      args[i++] = evaluate(kid, x, y);
 
-    // Apply root's function to the children arguments 
+    // Apply root's function to the children arguments
     root.set();
     Function f = getFunction(root.getNodeVal()); // using enum + array
     //Function f = functions.get(root.getNodeVal()); // using HashMap
@@ -536,22 +547,5 @@ public class DAGEvaluator
       throws Exception;
   }// interface Function
 
-  public static void main(String[] args)
-    throws Exception
-  {
-    PrintWriter pen = new PrintWriter(System.out, true);
-    String code = "wsum(x,x)";
-    TreeNode root = Parser.parse(code);
-    pen.println("After parsing, the tree is:\n " + root);
-    TreeNode dagRoot = DAG.makeDAG(root);
-    pen.println("After making a DAG, the tree is:\n " + dagRoot);
-    DAGEvaluator e = new DAGEvaluator();
-    pen.println("Result is " + e.evaluate(dagRoot));
 
-    // Experimenting with enum valueOf and ordinal
-    int arr[] = { 7, 2, 3 };
-    String funName = "sum";
-    FUN_NAMES name = FUN_NAMES.valueOf("FUN_" + funName.toUpperCase());
-    pen.println(arr[name.ordinal()]);
-  }// main
 }// DAGEvaluator class

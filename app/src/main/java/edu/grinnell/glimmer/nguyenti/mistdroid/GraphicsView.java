@@ -10,7 +10,11 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 
+import edu.grinnell.glimmer.nguyenti.mistdroid.dagmaking.DAG;
 import edu.grinnell.glimmer.nguyenti.mistdroid.data.Pixel;
+import edu.grinnell.glimmer.nguyenti.mistdroid.evaluating.DAGEvaluator;
+import edu.grinnell.glimmer.nguyenti.mistdroid.parsing.Parser;
+import edu.grinnell.glimmer.nguyenti.mistdroid.parsing.TreeNode;
 
 import static android.graphics.Bitmap.Config;
 
@@ -22,6 +26,7 @@ public class GraphicsView extends View {
 
     private int gridSize = 200;
     private int strokeWidth = 50;
+    private DAGEvaluator dagEvaluator;
 
     private Paint paintBg;
     private Paint paintPoints;
@@ -58,23 +63,45 @@ public class GraphicsView extends View {
         Rect dest = new Rect(0,0,getWidth(),getWidth());
 
 //        Bitmap bitmap = makeBitmap(round);
-        updateBitmap();
-        round = (round + 1) % height;
-        canvas.drawBitmap(bitmap, src, dest, paintBg);
-
+//        round = (round + 1) % height;
+//        canvas.drawBitmap(bitmap, src, dest, paintBg);
+        try {
+            updateBitmap();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         invalidate();
     }
 
-    private void updateBitmap() {
+    public void codeIt(String code) throws Exception {
+        TreeNode d = DAG.makeDAG(Parser.parse(code));
+
+        dagEvaluator = new DAGEvaluator(d);
+//        updateBitmap();
+    }
+
+    private void updateBitmap() throws Exception {
         int size = height * width;
         int colors[] = new int[size];
+        Pixel pix[] = new Pixel[size];
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width; j++)
+            {
+                double x = (i*height + j)/(width * 1.0) * 2.0 - 1.0;
+                double y = i/(height * 1.0) * 2.0 - 1.0;
+                pix[i + j*height] = dagEvaluator.evaluate(x,y);
+                colors[i + j*height] = pix[i + j*height].gradientToRGB();
+            }
+        /**
         for (int i = 0; i < size; i++) {
             if (i >= round * width && i < (round + 1) * width)
-                colors[i] = new Pixel(1).gradientToRGB();
+                colors[i] = new Pixel(-1).gradientToRGB();
             else
-                colors[i] = new Pixel(.01).gradientToRGB(); // there's a bug here with 0
+                colors[i] = new Pixel(1).gradientToRGB(); // there's a bug here with 0
         }
+         **/
         bitmap.setPixels(colors, 0, width, 0, 0, width, height);
+        invalidate();
     }
 
     private Bitmap makeBitmap(int round) {

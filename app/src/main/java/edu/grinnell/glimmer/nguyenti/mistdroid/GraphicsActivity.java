@@ -18,7 +18,11 @@ public class GraphicsActivity extends Activity {
         String code = i.getStringExtra("TAG_CODE");
 
         final GraphicsView gView = (GraphicsView) findViewById(R.id.graphicsView);
-        
+        try {
+            gView.codeIt(code);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -134,9 +134,9 @@ public class Pixel
 
     public int gradientToRGB() {
 
-        int R = (int) (255 * components[0]);
-        int G = (int) (255 * components[1]);
-        int B = (int)  (255 * components[2]);
+        int R = (int) (255 * (components[0]/2.0 + .5));
+        int G = (int) (255 * (components[1]/2.0 + .5));
+        int B = (int) (255 * (components[2]/2.0 + .5));
 
         R = (R << 16) & 0x00FF0000;
         G = (G << 8) & 0x0000FF00;

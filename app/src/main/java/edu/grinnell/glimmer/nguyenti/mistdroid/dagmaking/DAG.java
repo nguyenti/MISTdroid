@@ -112,15 +112,15 @@ public class DAG
    * A simple experiment
    * 
    */
-  public static void main(String[] args)
-    throws Exception
-  {
-    PrintWriter pen = new PrintWriter(System.out, true);
-    String code = "sum(neg(x), neg(x), x, y)";
-    TreeNode root = Parser.parse(code);
-    pen.println("After parsing, the tree is:\n " + root);
-    TreeNode dagRoot = makeDAG(root);
-    pen.println("After making a DAG, the tree is:\n " + dagRoot);
-  }// main
+//  public static void main(String[] args)
+//    throws Exception
+//  {
+//    PrintWriter pen = new PrintWriter(System.out, true);
+//    String code = "sum(neg(x), neg(x), x, y)";
+//    TreeNode root = Parser.parse(code);
+//    pen.println("After parsing, the tree is:\n " + root);
+//    TreeNode dagRoot = makeDAG(root);
+//    pen.println("After making a DAG, the tree is:\n " + dagRoot);
+//  }// main
 
 }//DAG class
