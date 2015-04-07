@@ -1,5 +1,7 @@
 package edu.grinnell.glimmer.nguyenti.mistdroid;
 
+import edu.grinnell.glimmer.nguyenti.mistdroid.data.Pixel;
+
 /**
  * Created by tiffanynguyen on 2/8/15.
  */

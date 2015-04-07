@@ -1,17 +1,16 @@
 package edu.grinnell.glimmer.nguyenti.mistdroid;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
+
+import edu.grinnell.glimmer.nguyenti.mistdroid.data.Pixel;
 
 import static android.graphics.Bitmap.Config;
 

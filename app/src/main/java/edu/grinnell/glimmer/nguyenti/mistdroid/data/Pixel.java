@@ -1,4 +1,4 @@
-package edu.grinnell.glimmer.nguyenti.mistdroid;
+package edu.grinnell.glimmer.nguyenti.mistdroid.data;
 
 
 import android.graphics.Color;
