@@ -298,6 +298,19 @@ public class DAGEvaluator
   }// evaluate(TreeNode)
 
   /**
+   * Clear the DAG
+   */
+  public TreeNode clearDAG(TreeNode d) {
+    if (!d.isSet()) {
+      return d;
+    } else {
+      d.clear();
+      //STUB
+      return null;
+    }
+  }
+
+  /**
    * Get environmental variables like x, y, t.s, etc.
    * @param nodeVal, string representation of the
    *    desired environmental variable

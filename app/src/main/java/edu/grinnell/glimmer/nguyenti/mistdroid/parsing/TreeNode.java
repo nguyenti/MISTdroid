@@ -81,6 +81,7 @@ public class TreeNode
   {
     set = true;
   }
+  public void clear() { set = false; }
   public void evaluate(Pixel v)
   {
     evaluation = v;
