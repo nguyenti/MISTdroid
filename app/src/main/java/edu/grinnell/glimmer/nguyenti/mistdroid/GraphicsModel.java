@@ -1,6 +1,7 @@
 package edu.grinnell.glimmer.nguyenti.mistdroid;
 
 import edu.grinnell.glimmer.nguyenti.mistdroid.data.Pixel;
+import edu.grinnell.glimmer.nguyenti.mistdroid.evaluating.DAGEvaluator;
 
 /**
  * Created by tiffanynguyen on 2/8/15.
@@ -31,38 +32,22 @@ public class GraphicsModel {
      |    Properties    |
      +------------------*/
 
-    private Pixel grid[][]; // stores the data of a pixel
-    private int gridSize; // the dimensions of the grid
+    private DAGEvaluator dagEvaluator;
 
     /*------------------+
      |  Getter/Setter   |
      +------------------*/
 
-    public Pixel getFieldContent(int x, int y) {
-        return grid[y][x];
+    public DAGEvaluator getDAG() {
+        return dagEvaluator;
     }
 
     /*------------------+
-     |   Grid methods   |
+     |   DAG methods   |
      +------------------*/
     // initialize grid
-    public void initializeGrid(int size) {
-        if (grid == null) {
-            grid = new Pixel[size][size];
-            gridSize = size;
-        }
-        setGrid();
+    public void initializeDAG(DAGEvaluator dag) {
+        dagEvaluator = dag;
     }
 
-    public void setGrid() {
-        for (int i = 0; i < gridSize; i++) {
-            for (int j = 0; j < gridSize; j++) {
-                grid[i][j] = new Pixel();
-            }
-        }
-    }
-
-    public Pixel getPixel(int x, int y) {
-        return grid[x][y];
-    }
 }

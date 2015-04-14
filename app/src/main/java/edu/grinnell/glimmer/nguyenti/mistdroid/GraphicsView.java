@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 
 import edu.grinnell.glimmer.nguyenti.mistdroid.dagmaking.DAG;
@@ -19,14 +20,13 @@ import edu.grinnell.glimmer.nguyenti.mistdroid.parsing.TreeNode;
 import static android.graphics.Bitmap.Config;
 
 /**
- * Created by tiffanynguyen on 2/1/15.
+ * View that contains a Canvas that takes code and displays an image on the canvas
  */
 public class GraphicsView extends View {
 
 
     private int gridSize = 200;
     private int strokeWidth = 50;
-    private DAGEvaluator dagEvaluator;
 
     private Paint paintBg;
     private Paint paintPoints;
@@ -38,7 +38,7 @@ public class GraphicsView extends View {
 
 
         paintBg = new Paint();
-        paintBg.setColor(Color.BLUE);
+//        paintBg.setColor(Color.BLUE);
 
         paintPoints = new Paint();
         paintPoints.setColor(Color.RED);
@@ -47,8 +47,7 @@ public class GraphicsView extends View {
         paintwidth.setStrokeWidth(strokeWidth);
         paintwidth.setColor(Color.RED);
 
-        GraphicsModel instance = GraphicsModel.getInstance();
-        instance.initializeGrid(gridSize);
+
     }
 
     int height = 100;
@@ -70,13 +69,18 @@ public class GraphicsView extends View {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        canvas.drawBitmap(bitmap, src, dest, paintBg);
+
         invalidate();
     }
 
     public void codeIt(String code) throws Exception {
         TreeNode d = DAG.makeDAG(Parser.parse(code));
 
-        dagEvaluator = new DAGEvaluator(d);
+        GraphicsModel.getInstance().initializeDAG(new DAGEvaluator(d));
+        Log.i("TAG_CREATE_DAG", "Dag created");
 //        updateBitmap();
     }
 
@@ -84,24 +88,26 @@ public class GraphicsView extends View {
         int size = height * width;
         int colors[] = new int[size];
         Pixel pix[] = new Pixel[size];
-        for (int i = 0; i < height; i++)
-            for (int j = 0; j < width; j++)
-            {
-                double x = j/(width * 1.0) * 2.0 - 1.0;
-                double y = i/(height * 1.0) * 2.0 - 1.0;
-                pix[i + j*height] = dagEvaluator.evaluate(x,y);
-                colors[i + j*height] = pix[i + j*height].gradientToRGB();
+        GraphicsModel instance = GraphicsModel.getInstance();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                double x = j / (width * 1.0) * 2.0 - 1.0;
+                double y = i / (height * 1.0) * 2.0 - 1.0;
+                pix[j + i * height] = instance.getDAG().evaluate(x, y);
+//                colors[j + i * height] = (new Pixel(-1)).gradientToRGB();
+                colors[j + i * height] = pix[j + i * height].gradientToRGB();
             }
+        }
         /**
         for (int i = 0; i < size; i++) {
             if (i >= round * width && i < (round + 1) * width)
                 colors[i] = new Pixel(-1).gradientToRGB();
             else
                 colors[i] = new Pixel(1).gradientToRGB(); // there's a bug here with 0
-        }
+         }
          **/
         bitmap.setPixels(colors, 0, width, 0, 0, width, height);
-        invalidate();
+//        invalidate();
     }
 
     private Bitmap makeBitmap(int round) {
