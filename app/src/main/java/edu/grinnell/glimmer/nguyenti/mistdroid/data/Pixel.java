@@ -140,6 +140,7 @@ public class Pixel
 //      int G = Math.round(255 * rVal);
 //      int B = Math.round(255 * rVal);
 
+      // this might be flipped. 255 - R...
         int R = (int) (255 * (components[0]/2.0 + .5));
         int G = (int) (255 * (components[1]/2.0 + .5));
         int B = (int) (255 * (components[2]/2.0 + .5));
