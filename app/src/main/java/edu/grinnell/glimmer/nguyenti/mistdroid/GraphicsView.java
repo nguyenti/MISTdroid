@@ -87,7 +87,7 @@ public class GraphicsView extends View {
         for (int i = 0; i < height; i++)
             for (int j = 0; j < width; j++)
             {
-                double x = (i*height + j)/(width * 1.0) * 2.0 - 1.0;
+                double x = j/(width * 1.0) * 2.0 - 1.0;
                 double y = i/(height * 1.0) * 2.0 - 1.0;
                 pix[i + j*height] = dagEvaluator.evaluate(x,y);
                 colors[i + j*height] = pix[i + j*height].gradientToRGB();

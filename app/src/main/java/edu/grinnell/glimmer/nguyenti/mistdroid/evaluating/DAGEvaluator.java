@@ -250,7 +250,10 @@ public class DAGEvaluator
 
 
     public Pixel evaluate(double x, double y) throws Exception {
-        return evaluate(dag, x, y);
+
+       Pixel p = evaluate(dag, x, y);
+       clearDAG(dag);
+       return p;
     }
   /**
    * Evaluate a DAG helper.
@@ -300,15 +303,13 @@ public class DAGEvaluator
   /**
    * Clear the DAG
    */
-  public TreeNode clearDAG(TreeNode d) {
-    if (!d.isSet()) {
-      return d;
-    } else {
+  public void clearDAG(TreeNode d) {
+    if (d.isSet()) {
       d.clear();
-      //STUB
-      return null;
+      for (TreeNode kid : d.getChildren())
+          clearDAG(kid);
     }
-  }
+  }// clearDAG
 
   /**
    * Get environmental variables like x, y, t.s, etc.
