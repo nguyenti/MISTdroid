@@ -12,6 +12,7 @@ public class TreeNode
   String val;
   ArrayList<TreeNode> children;
   boolean set;
+  boolean hasRGBFunction;
   Pixel evaluation;
 
   /* Constructor */
@@ -20,6 +21,7 @@ public class TreeNode
     val = str;
     children = new ArrayList<>();
     set = false;
+    hasRGBFunction = false;
   }// TreeNode
 
   /* Adding children */
@@ -70,7 +72,15 @@ public class TreeNode
   {
     return set;
   }
-  
+
+   public void setRGBFunction()
+   {
+      hasRGBFunction = true;
+   }
+   public boolean getRGBFunction()
+   {
+      return hasRGBFunction;
+   }
   public Pixel getEvaluation()
   {
     return this.evaluation;

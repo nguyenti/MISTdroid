@@ -208,6 +208,7 @@ public class DAGEvaluator
                               public Pixel apply(Pixel[] args)
                                 throws Exception
                               {
+                                dag.setRGBFunction();
                                 if (args.length != 3)
                                   throw new Exception();
                                 // Take the first component of the first child, 
