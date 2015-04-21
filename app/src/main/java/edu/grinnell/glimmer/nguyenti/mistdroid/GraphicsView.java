@@ -3,7 +3,6 @@ package edu.grinnell.glimmer.nguyenti.mistdroid;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -91,7 +90,7 @@ public class GraphicsView extends View {
                     pix[j + i * height].flipGradient();
                 }
 
-                colors[j + i * height] = pix[j + i * height].gradientToRGB();
+                colors[j + i * height] = pix[j + i * height].RGBToInt();
             }
         }
         bitmap.setPixels(colors, 0, width, 0, 0, width, height);

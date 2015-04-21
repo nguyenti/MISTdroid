@@ -126,13 +126,20 @@ public class Pixel {
         System.out.println(seventeen);
     }
 
+    /**
+     * Flip all values of the RGB
+     */
     public void flipGradient() {
         for (int i = 0; i < 3; i++) {
             components[i] *= -1;
         }
     }
 
-    public int gradientToRGB() {
+    /**
+     * Convert the RGB values to its integer complement
+     * @return
+     */
+    public int RGBToInt() {
 
 //      int rVal = (int) (.5 * 255);
 //
