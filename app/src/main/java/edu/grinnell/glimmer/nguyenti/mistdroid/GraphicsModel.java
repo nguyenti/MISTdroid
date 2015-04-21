@@ -38,7 +38,7 @@ public class GraphicsModel {
      |  Getter/Setter   |
      +------------------*/
 
-    public DAGEvaluator getDAG() {
+    public DAGEvaluator getDagEvaluator() {
         return dagEvaluator;
     }
 

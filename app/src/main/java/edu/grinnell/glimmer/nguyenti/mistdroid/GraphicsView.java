@@ -91,10 +91,16 @@ public class GraphicsView extends View {
         GraphicsModel instance = GraphicsModel.getInstance();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                double x = -1 * (j / (width * 1.0) * 2.0 - 1.0);
-                double y = -1 * (i / (height * 1.0) * 2.0 - 1.0);
-                pix[j + i * height] = instance.getDAG().evaluate(x, y);
-//                colors[j + i * height] = (new Pixel(-1)).gradientToRGB();
+                double x = j / (width * 1.0) * 2.0 - 1.0;
+                double y = i / (height * 1.0) * 2.0 - 1.0;
+
+                // if the code does not contain the RGB function, flip the gradient
+                if (!instance.getDagEvaluator().getDag().getRGBFunction()) {
+                    x *= -1;
+                    y *= -1;
+                }
+
+                pix[j + i * height] = instance.getDagEvaluator().evaluate(x, y);
                 colors[j + i * height] = pix[j + i * height].gradientToRGB();
             }
         }
