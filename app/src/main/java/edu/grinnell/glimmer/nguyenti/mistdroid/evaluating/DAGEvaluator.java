@@ -16,11 +16,9 @@ import edu.grinnell.glimmer.nguyenti.mistdroid.parsing.*;
  */
 public class DAGEvaluator
 {
-
+  // DAG to be evaluated
   TreeNode dag;
-  // Hashtable of MIST function strings and their implementations
-  HashMap<String, Function> functions;
-
+  // Array of MIST function strings and their implementations
   Function function1[] = {
                           // Sum
                           new Function()
@@ -245,8 +243,6 @@ public class DAGEvaluator
   public DAGEvaluator(TreeNode d)
   {
     dag = d;
-    functions = new HashMap<>();
-    populateFunctionMap();
   }// DAGEvaluator()
 
 
@@ -348,215 +344,6 @@ public class DAGEvaluator
         throw new Exception("Invalid function name:" + funName);
       } // catch
   } // getFunction
-
-  /**
-   * Populate the map with function strings and corresponding implementations
-   */
-  void populateFunctionMap()
-  {
-    // Sum
-    functions.put("sum", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                      {
-                        Pixel sum = new Pixel(0, 0, 0);
-                        for (Pixel arg : args)
-                          {
-                            sum.add(arg);
-                          }// for each argument
-                        sum.range();
-                        return sum;
-                      }
-                    });
-    // Multiplication
-    functions.put("mult", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                      {
-                        Pixel prod = new Pixel(1, 1, 1);
-                        for (Pixel arg : args)
-                          {
-                            prod.multiplyBy(arg);
-                          }// for each argument
-                        prod.range();
-                        return prod;
-                      }
-                    });
-    // Average
-    functions.put("avg", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                      {
-                        Pixel sum = new Pixel(0, 0, 0);
-                        for (Pixel arg : args)
-                          {
-                            sum.add(arg);
-                          }// for each argument
-                        sum.range();
-                        sum.multiplyBy(new Pixel(1 / ((double) args.length)));
-                        return sum;
-                      }
-                    });
-    // Wrap sum
-    functions.put("wsum", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                      {
-                        Pixel sum = new Pixel(0, 0, 0);
-                        for (Pixel arg : args)
-                          {
-                            sum.add(arg);
-                          }// for each argument
-                        sum.wrap();
-                        return sum;
-                      }
-                    });
-    // Negate
-    functions.put("neg", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                        throws Exception
-                      {
-                        if (args.length != 1)
-                          throw new Exception();
-                        Pixel result = new Pixel();
-                        for (int i = 0; i < 3; i++)
-                          {
-                            result.components[i] = -1.0 * args[0].components[i];
-                          }// for each component
-                        result.range();
-                        return result;
-                      }
-                    });
-    // Sine
-    functions.put("sin", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                        throws Exception
-                      {
-                        if (args.length != 1)
-                          throw new Exception();
-                        Pixel result = new Pixel();
-                        for (int i = 0; i < 3; i++)
-                          {
-                            result.components[i] =
-                                Math.sin(args[0].components[i]);
-                          }// for each component
-                        result.range();
-                        return result;
-                      }
-                    });
-    // Cosine
-    functions.put("cos", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                        throws Exception
-                      {
-                        if (args.length != 1)
-                          throw new Exception();
-                        Pixel result = new Pixel();
-                        for (int i = 0; i < 3; i++)
-                          {
-                            result.components[i] =
-                                Math.cos(args[0].components[i]);
-                          }// for each component
-                        result.range();
-                        return result;
-                      }
-                    });
-    // Square root
-    functions.put("sqr", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                        throws Exception
-                      {
-                        if (args.length != 1)
-                          throw new Exception();
-                        Pixel result = new Pixel();
-                        for (int i = 0; i < 3; i++)
-                          { // Notice that we allow negative inputs 
-                            result.components[i] =
-                                Math.sqrt(Math.abs(args[0].components[i]));
-                          }// for each component
-                        result.range();
-                        return result;
-                      }
-                    });
-    // Absolute value
-    functions.put("abs", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                        throws Exception
-                      {
-                        if (args.length != 1)
-                          throw new Exception();
-                        Pixel result = new Pixel();
-                        for (int i = 0; i < 3; i++)
-                          { // Notice that we allow negative inputs 
-                            result.components[i] =
-                                Math.abs(args[0].components[i]);
-                          }// for each component
-                        result.range();
-                        return result;
-                      }
-                    });
-
-    // Non-component-wise sign
-    functions.put("sign", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                        throws Exception
-                      {
-                        if (args.length != 1)
-                          throw new Exception();
-
-                        if (args[0].components[0] > 0
-                            && args[0].components[1] > 0
-                            && args[0].components[2] > 0)
-                          return new Pixel(1.0);
-                        else
-                          return new Pixel(-1.0);
-                      }
-                    });
-    // Non-component-wise if
-    functions.put("if", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                        throws Exception
-                      {
-                        if (args.length != 3)
-                          throw new Exception();
-                        // If each component of the test is positive
-                        if (args[0].components[0] > 0
-                            && args[0].components[1] > 0
-                            && args[0].components[2] > 0)
-                          // return the first option
-                          return args[1];
-                        else
-                          // otherwise, the second option
-                          return args[2];
-                      }
-                    });
-    // RGB
-    functions.put("rgb", new Function()
-                    {
-                      public Pixel apply(Pixel[] args)
-                        throws Exception
-                      {
-                        if (args.length != 3)
-                          throw new Exception();
-                        // Take the first component of the first child, 
-                        // second of the second child, etc
-                        Pixel result =
-                            new Pixel(args[0].components[0],
-                                         args[1].components[1],
-                                         args[2].components[2]);
-                        result.range();
-                        return result;
-                      }
-                    });
-
-  }// populateFunctionMap
 
   /** 
    * Helper interface for Function objects
