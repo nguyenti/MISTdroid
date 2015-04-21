@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class HomeActivity extends Activity {
@@ -24,9 +25,15 @@ public class HomeActivity extends Activity {
         btnRed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), GraphicsActivity.class);
-                i.putExtra("TAG_CODE", codeText.getText().toString());
-                startActivity(i);
+                // check to see if any code was written
+                if (codeText.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(),
+                            "Please type in some code", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent i = new Intent(getBaseContext(), GraphicsActivity.class);
+                    i.putExtra("TAG_CODE", codeText.getText().toString());
+                    startActivity(i);
+                }
             }
         });
     }

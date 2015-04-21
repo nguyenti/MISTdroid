@@ -94,13 +94,13 @@ public class GraphicsView extends View {
                 double x = j / (width * 1.0) * 2.0 - 1.0;
                 double y = i / (height * 1.0) * 2.0 - 1.0;
 
+                pix[j + i * height] = instance.getDagEvaluator().evaluate(x, y);
+
                 // if the code does not contain the RGB function, flip the gradient
                 if (!instance.getDagEvaluator().getDag().getRGBFunction()) {
-                    x *= -1;
-                    y *= -1;
+                    pix[j + i * height].flipGradient();
                 }
 
-                pix[j + i * height] = instance.getDagEvaluator().evaluate(x, y);
                 colors[j + i * height] = pix[j + i * height].gradientToRGB();
             }
         }
