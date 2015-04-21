@@ -256,6 +256,11 @@ public class DAGEvaluator
        clearDAG(dag);
        return p;
     }
+
+  public TreeNode getDag() {
+    return dag;
+  }
+
   /**
    * Evaluate a DAG helper.
    * @param root of the DAG
