@@ -123,7 +123,7 @@ public class DAGEvaluator
                                 for (int i = 0; i < 3; i++)
                                   {
                                     result.components[i] =
-                                        Math.sin(args[0].components[i]);
+                                        Math.sin(Math.PI * args[0].components[i]);
                                   }
                                 result.range();
                                 return result;
@@ -141,7 +141,7 @@ public class DAGEvaluator
                                 for (int i = 0; i < 3; i++)
                                   {
                                     result.components[i] =
-                                        Math.cos(args[0].components[i]);
+                                        Math.cos(Math.PI * args[0].components[i]);
                                   } // for each component
                                 result.range();
                                 return result;
