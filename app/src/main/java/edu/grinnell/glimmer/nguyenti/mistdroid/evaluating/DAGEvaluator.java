@@ -275,13 +275,23 @@ public class DAGEvaluator
     // If leaf, get context parameters
     if (root.isLeaf())
       {
-        //STUB
         root.set();
         Pixel val;
-        if (root.getNodeVal().equals("x"))
+        String str = root.getNodeVal();
+        if (str.equals("x"))
             val = new Pixel(x);
-         else
+        else if (str.equals("y"))
             val = new Pixel(y);
+        else
+        {
+            try {
+                val = new Pixel(Double.parseDouble(str));
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failed to parse " + str + " as a double.");
+            }
+        }
           root.evaluate(val);
           return val;
       }// if leaf
