@@ -2,6 +2,8 @@ package edu.grinnell.glimmer.nguyenti.mistdroid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +14,8 @@ import android.widget.Toast;
  */
 public class GraphicsActivity extends Activity {
 
+    GraphicsView gView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,12 +24,29 @@ public class GraphicsActivity extends Activity {
         Intent i = getIntent();
         String code = i.getStringExtra("TAG_CODE");
 
-        final GraphicsView gView = (GraphicsView) findViewById(R.id.graphicsView);
+        gView = (GraphicsView) findViewById(R.id.graphicsView);
         try {
             gView.codeIt(code);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        new CheckForErrorsTask().execute();
     }
 
+    private class CheckForErrorsTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            while (!gView.hasError());
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean s) {
+            super.onPostExecute(s);
+            Toast.makeText(getApplicationContext(),
+                    "There was an issue with your code. Please try again.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 }

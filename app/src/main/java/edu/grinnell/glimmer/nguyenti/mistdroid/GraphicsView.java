@@ -25,6 +25,7 @@ public class GraphicsView extends View {
 
 
     private Paint paintBg;
+    private boolean error = false;
 
     int height = 100;
     int width = 100;
@@ -47,12 +48,19 @@ public class GraphicsView extends View {
         try {
             updateBitmap();
         } catch (Exception e) {
+            if (!error) {
+                error = true;
+            }
             e.printStackTrace();
         }
 
         canvas.drawBitmap(bitmap, src, dest, paintBg);
 
         invalidate();
+    }
+
+    public boolean hasError() {
+        return error;
     }
 
     /**
