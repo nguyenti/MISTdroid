@@ -14,17 +14,17 @@ import android.widget.Toast;
  */
 public class GraphicsActivity extends Activity {
 
-    GraphicsView gView;
+    AltGraphicsView gView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graphics);
+        setContentView(R.layout.activity_alt_graphics);
 
         Intent i = getIntent();
         String code = i.getStringExtra("TAG_CODE");
 
-        gView = (GraphicsView) findViewById(R.id.graphicsView);
+        gView = (AltGraphicsView) findViewById(R.id.altgraphicsView);
         try {
             gView.codeIt(code);
         } catch (Exception e) {
