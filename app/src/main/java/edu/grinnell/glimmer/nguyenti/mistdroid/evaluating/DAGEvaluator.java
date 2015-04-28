@@ -227,7 +227,7 @@ public class DAGEvaluator
       FUN_WSUM, //1
       FUN_MULT, //2
       FUN_AVG, //3
-      FUN_SQR, //4
+      FUN_SQUARE, //4
       FUN_NEG, //5
       FUN_SIN, //6
       FUN_COS, //7
