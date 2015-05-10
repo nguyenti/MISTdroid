@@ -18,10 +18,10 @@ import edu.grinnell.glimmer.nguyenti.mistdroid.parsing.Parser;
 import edu.grinnell.glimmer.nguyenti.mistdroid.parsing.TreeNode;
 
 /**
- * Created by albertowusu-asare on 4/28/15.
+ * @author: Yazan Kittaneh & Albert Owusu-Asare
  */
-public class AltGraphicsView extends SurfaceView implements SurfaceHolder.Callback{
-
+public class AltGraphicsView{
+/*
     PanelThread panelThread;
     private Paint paintBg;
     private boolean error = false;
@@ -46,43 +46,15 @@ public class AltGraphicsView extends SurfaceView implements SurfaceHolder.Callba
 
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        panelThread.setRunning(true);
-        panelThread.run();
-
-    }
-
-    @Override
     public void onDraw(Canvas canvas){
         performDraw(canvas);
     }
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        bitmap = Bitmap.createBitmap(new DisplayMetrics(), width, height,
-                Bitmap.Config.ARGB_8888);
-        panelThread.setRunning(true);
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-
-        // TODO Auto-generated method stub
-        boolean retry = true;
-        panelThread.setRunning(false);
-        while (retry) {
-            try {
-                panelThread.join();
-                retry = false;
-            } catch (InterruptedException e) {
-            }
-        }
-    }
-
 
     /**
      * Set the bitmap of the graphic. This may need to be changed with time functions
      * @throws Exception
      */
+    /*
     private void updateBitmap() throws Exception {
         int size = height * width;
         int colors[] = new int[size];
@@ -113,6 +85,7 @@ public class AltGraphicsView extends SurfaceView implements SurfaceHolder.Callba
      * @param code
      * @throws Exception
      */
+    /*
     public void codeIt(String code) throws Exception {
         TreeNode d = DAG.makeDAG(Parser.parse(code));
 
@@ -124,6 +97,7 @@ public class AltGraphicsView extends SurfaceView implements SurfaceHolder.Callba
      * Performs the drawing on the view
      */
 
+    /*
     public void performDraw(Canvas canvas){
 
         Rect src = new Rect(0,0,width,height);
@@ -139,13 +113,11 @@ public class AltGraphicsView extends SurfaceView implements SurfaceHolder.Callba
         }
 
         canvas.drawBitmap(bitmap, src, dest, paintBg);
-
-        //invalidate();
-
     }
 
     public boolean hasError() {
         return error;
     }
+    */
 
 }

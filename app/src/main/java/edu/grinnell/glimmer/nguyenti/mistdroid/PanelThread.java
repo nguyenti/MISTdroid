@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
  */
 public class PanelThread extends Thread {
 
+    /*
     private SurfaceHolder _surfaceHolder;
     private AltGraphicsView _panel;
     private boolean _run = false;
@@ -29,6 +30,7 @@ public class PanelThread extends Thread {
     /**
      * Sets the run boolean
      */
+    /*
     public void setRunning(boolean run) { //Allow us to stop the thread
         _run = run;
     }
@@ -45,13 +47,17 @@ public class PanelThread extends Thread {
                 synchronized (_surfaceHolder) {
                     _panel.onDraw(canvas);
                    // _panel.performDraw(canvas);
-                    _panel.invalidate();
+                   //_panel.invalidate();
                 }
                 _surfaceHolder.unlockCanvasAndPost(canvas);
             }
 
             }
         }
+*/
+
+
+
     }
 
 
